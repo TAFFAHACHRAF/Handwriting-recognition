@@ -1,4 +1,4 @@
-﻿# Handwritten Digit Recognition using Neural Networks
+﻿# Handwritten Digit Recognition using Neural Networks.
 This project focuses on the fascinating field of artificial intelligence (AI) and specifically on the recognition of handwritten digits. With the advancements in machine learning and deep learning, this project aims to leverage these technologies to create an accurate and efficient system for recognizing and digitizing handwritten text.
 
 # Introduction
