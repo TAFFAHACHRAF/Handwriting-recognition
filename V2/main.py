@@ -2,6 +2,27 @@ import cv2
 import numpy as np
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('TkAgg')
+
+data = pd.read_csv('data/train.csv')
+data = np.array(data)
+m, n = data.shape
+np.random.shuffle(data)
+
+data_dev = data[0:1000].T
+Y_dev = data_dev[0]
+X_dev = data_dev[1:n]
+X_dev = X_dev / 255.
+
+data_train = data[1000:m].T
+Y_train = data_train[0]
+X_train = data_train[1:n]
+X_train = X_train / 255.
+_, m_train = X_train.shape
+Y_train
+
 
 def ReLU(Z):
     return np.maximum(Z, 0)
@@ -38,20 +59,30 @@ def load_image(image):
     flattened_image = resized_image.flatten() / 255.0  # Normalize the image
     return flattened_image
 
+def test_prediction(index, W1, b1, W2, b2):
+    current_image = X_train[:, index, None]
+    prediction = make_predictions(X_train[:, index, None], W1, b1, W2, b2)
+    label = Y_train[index]
+    print("Prediction: ", prediction)
+    print("Label: ", label)
+
+    current_image = current_image.reshape((28, 28)) * 255
+    plt.gray()
+    plt.imshow(current_image, interpolation='nearest')
+    plt.show()
+
 W1, b1, W2, b2 = load_model_2l()
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
-uploaded_file = st.file_uploader("Choose an image file", type="png")
+index = st.number_input("Enter an index:", min_value=0, max_value=len(Y_train)-1, step=1)
+# if st.button('Predict'):
+#     prediction = make_predictions(index, W1, b1, W2, b2)
+#     true_label = Y_train[index]
+#     predicted_label = prediction[0]
+#     st.write("True Label: ", true_label)
+#     st.write("Predicted Label: ", predicted_label)
 
-if uploaded_file is not None:
-    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-    opencv_image = cv2.imdecode(file_bytes, 1)
-    st.image(opencv_image, width=400)
-    image = load_image(opencv_image)
-    input_image = image.reshape((784, 1))
-
-    if st.button('Predict'):
-        prediction = make_predictions(input_image, W1, b1, W2, b2)
-        predicted_label = prediction[0]  # Get the predicted label (assuming make_predictions returns a single prediction)
-        st.write("Predicted Label: ", predicted_label)
+while True:
+    index = int(input("Enter a number (0 - 59999): "))
+    test_prediction(index, W1, b1, W2, b2)
