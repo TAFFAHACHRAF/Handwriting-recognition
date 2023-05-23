@@ -38,7 +38,7 @@ Data visualisation
 ## Project Structure
 
 The project is structured as follows:
-``
+```
 C:.
 ├── README.md
 └── V1
@@ -53,6 +53,7 @@ C:.
 ├── b1.npy
 ├── W2.npy
 └── b2.npy
+```
 
 
 
