@@ -26,7 +26,7 @@ def get_predictions(A2):
 
 def make_predictions(X, W1, b1, W2, b2):
     _, _, _, A2 = forward_prop(W1, b1, W2, b2, X)
-    predictions = get_predictions(A2)
+    predictions = get_predictions(A2) # [[?],[?],[?],[?],[],[?],[?],[?]]
     return predictions
 
 
@@ -46,7 +46,6 @@ def load_model_3l():
     W3 = np.load('model/tree_layers/W3.npy')
     b3 = np.load('model/tree_layers/b3.npy')
     return W1, b1, W2, b2, W3, b3
-
 
 def load_image(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
